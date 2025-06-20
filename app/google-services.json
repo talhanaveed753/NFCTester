@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "988353398154",
+    "project_id": "nfc-tester-849ad",
+    "storage_bucket": "nfc-tester-849ad.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:988353398154:android:bf2863c1926b32d814f473",
+        "android_client_info": {
+          "package_name": "com.example.nfctester"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBez-Tajpx11C6MWiMMiVi3Di-zedfXW48"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
