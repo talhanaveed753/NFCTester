@@ -14,7 +14,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nfctester.databinding.ActivityMainBinding
-import com.google.firebase.firestore.FirebaseFirestore // Import FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestore // Import Firebase Firestore
 import com.google.firebase.firestore.ktx.firestore // Import for ktx extension
 import com.google.firebase.ktx.Firebase // General Firebase import
 
@@ -34,12 +34,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
 
-        // Initialize Firestore
+        // Initialize firestore
         db = Firebase.firestore
 
         binding.appBarMain.fab?.setOnClickListener { view ->
-            addNewUser() // Call a function to add user
-            Snackbar.make(view, "Adding user to Firestore...", Snackbar.LENGTH_LONG)
+            addSampleNFCData() // Call a function to add sample data
+            Snackbar.make(view, "Adding NFC data to Firestore...", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
                 .setAnchorView(R.id.fab).show()
         }
@@ -70,28 +70,37 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Example: Read data when activity is created
-        readUsers()
+        readData()
     }
 
-    private fun addNewUser() {
-        // Create a new user with a first and last name
-        val user1 = hashMapOf(
-            "first" to "Ada",
-            "last" to "Lovelace",
-            "born" to 1815
+    private fun addSampleNFCData() {
+        // Create sample NFC data
+        val sampleTagData1 = hashMapOf(
+            "Id" to "87654321",
+            "type" to "mood",
+            "healthData" to "green",
+            "last_used" to "06-09-2025"
         )
 
-        // Create a new user with a first, middle, and last name
-        val user2 = hashMapOf(
-            "first" to "Alan",
-            "middle" to "Mathison",
-            "last" to "Turing",
-            "born" to 1912,
+        // Create sample NFC data
+        val sampleTagData2 = hashMapOf(
+            "Id" to "12345678",
+            "type" to "mood",
+            "healthData" to "red",
+            "last_used" to "06-01-2025"
         )
 
         // Add a new document with a generated ID
-        db.collection("users")
-            .add(user1)
+        db.collection("NFC Data")
+            .add(sampleTagData1)
+            .addOnSuccessListener { documentReference ->
+                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document", e)
+            }
+        db.collection("NFC Data")
+            .add(sampleTagData2)
             .addOnSuccessListener { documentReference ->
                 Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
             }
@@ -100,8 +109,8 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    private fun readUsers(){
-        db.collection("users")
+    private fun readData(){
+        db.collection("NFC Data")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
